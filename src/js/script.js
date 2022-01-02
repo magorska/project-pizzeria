@@ -236,7 +236,7 @@
     addToCart() {
       const thisProduct = this;
 
-      app.cart.add(thisProduct.prepareCartProduct);
+      app.cart.add(thisProduct.prepareCartProduct());
     }
 
     prepareCartProduct() {
@@ -244,11 +244,11 @@
 
       const productSummary = {
         id: thisProduct.id,
-        name: thisProduct.name,
+        name: thisProduct.data.name,
         amount: thisProduct.amountWidget.value,
         priceSingle: thisProduct.priceSingle,
-        price: thisProduct.priceSingle * thisProduct.AmountWidget.value,
-        params: thisProduct.prepareCartProductParams()
+        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        params: thisProduct.prepareCartProductParams(),
       };
 
       return productSummary;
@@ -256,32 +256,26 @@
 
     prepareCartProductParams() {
       const thisProduct = this;
-
       const formData = utils.serializeFormToObject(thisProduct.form);
       const params = {};
-
-      // for very category (param)
+      // for every category (param)...
       for (let paramId in thisProduct.data.params) {
         const param = thisProduct.data.params[paramId];
-
         // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
         params[paramId] = {
           label: param.label,
-          options: {}
+          options: {},
         };
-
         // for every option in this category
         for (let optionId in param.options) {
           const option = param.options[optionId];
-          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-
+          const optionSelected =
+            formData[paramId] && formData[paramId].includes(optionId);
           if (optionSelected) {
-            // option is selected!
-            params[paramId].option[optionId] = option.label;
+            params[paramId].options[optionId] = option.label;
           }
         }
       }
-
       return params;
     }
   }
