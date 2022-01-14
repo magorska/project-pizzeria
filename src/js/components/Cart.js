@@ -1,5 +1,5 @@
-import { settings, select, classNames, templates } from './settings.js';
-import utils from './utils.js';
+import { settings, select, classNames, templates } from '../settings.js';
+import utils from '../utils.js';
 import CartProduct from './CartProduct.js';
 
 class Cart {
@@ -100,6 +100,7 @@ class Cart {
     } else {
       thisCart.deliveryFee = 0;
       thisCart.subtotalPrice = 0;
+      thisCart.totalPrice = 0;
     }
 
     thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
