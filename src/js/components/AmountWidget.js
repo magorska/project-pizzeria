@@ -22,6 +22,7 @@ class AmountWidget {
   }
 
   setValue(value) {
+
     const thisWidget = this;
 
     const newValue = parseInt(value);
